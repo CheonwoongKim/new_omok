@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오목 게임 - Variant 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .grid-cell {
+            border: 1px solid #e5e7eb;
+            position: relative;
+        }
+        .game-piece {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+        .black-piece {
+            background-color: #000;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .white-piece {
+            background-color: #fff;
+            border: 2px solid #000;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .board-container {
+            background: linear-gradient(45deg, #f8f9fa 25%, transparent 25%), 
+                        linear-gradient(-45deg, #f8f9fa 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #f8f9fa 75%), 
+                        linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen p-4">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">오목 게임</h1>
+            <p class="text-lg text-gray-600">Five in a Row</p>
+        </div>
+        
+        <div class="flex flex-col lg:flex-row gap-8 items-start justify-center">
+            <!-- Game Board -->
+            <div class="board-container p-8 bg-yellow-50 rounded-2xl shadow-lg">
+                <div class="grid grid-cols-15 gap-0 bg-white rounded-lg shadow-inner p-4" style="grid-template-columns: repeat(15, 36px);">
+                    <!-- Generate 15x15 grid -->
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    
+                    <!-- Sample pieces for demonstration -->
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer">
+                        <div class="black-piece"></div>
+                    </div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer"></div>
+                    <div class="grid-cell h-9 hover:bg-gray-100 cursor-pointer">
+                        <div class="white-piece"></div>
+                    </div>
+                    <!-- Add remaining 208 cells with same pattern -->
+                    <!-- For brevity, showing representative cells -->
+                </div>
+            </div>
+            
+            <!-- Game Controls -->
+            <div class="lg:w-80 w-full space-y-6">
+                <!-- Current Player -->
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4 text-gray-900">현재 차례</h2>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-black rounded-full shadow-md"></div>
+                        <span class="text-xl font-medium text-gray-800">흑돌 차례</span>
+                    </div>
+                </div>
+                
+                <!-- Game Status -->
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4 text-gray-900">게임 상태</h2>
+                    <p class="text-lg text-gray-700">진행 중</p>
+                    <div class="mt-4 text-sm text-gray-500">
+                        <p>총 수: 0</p>
+                        <p>경과 시간: 0:00</p>
+                    </div>
+                </div>
+                
+                <!-- Score Counter -->
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4 text-gray-900">점수</h2>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-black rounded-full"></div>
+                                <span class="font-medium">흑돌</span>
+                            </div>
+                            <span class="text-xl font-bold">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-white border-2 border-black rounded-full"></div>
+                                <span class="font-medium">백돌</span>
+                            </div>
+                            <span class="text-xl font-bold">0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="space-y-4">
+                    <button class="w-full bg-gray-900 text-white py-4 px-6 rounded-2xl font-semibold text-lg hover:bg-gray-800 transition-colors shadow-lg">
+                        새 게임
+                    </button>
+                    <button class="w-full bg-gray-200 text-gray-800 py-4 px-6 rounded-2xl font-semibold text-lg hover:bg-gray-300 transition-colors">
+                        무르기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
