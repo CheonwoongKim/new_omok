@@ -1,5 +1,5 @@
 {
-  "name": "my-worker",
-  "main": "src/index.js",
+  "name": "new-omok",
+  "pages_build_output_dir": "./",
   "compatibility_date": "2025-08-14"
 }
